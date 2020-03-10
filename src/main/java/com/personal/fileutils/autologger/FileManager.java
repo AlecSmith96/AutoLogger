@@ -28,13 +28,17 @@ public class FileManager
         File folder = new File(fileLocation);
         File[] listOfFiles = folder.listFiles();
         Arrays.stream(listOfFiles).forEach(file -> {
-            try
+            if (!file.isDirectory())
             {
-                log.info("Replacing statements in file " + file.getName());
-                replaceStatementsForFile(file);
-            } catch (IOException e)
-            {
-                log.error("Unable to replacement statements for file " + file.getName(), e);
+                try
+                {
+                    log.info("Replacing statements in file " + file.getName());
+                    replaceStatementsForFile(file);
+                }
+                catch (IOException e)
+                {
+                    log.error("Unable to replacement statements for file " + file.getName(), e);
+                }
             }
         });
     }
