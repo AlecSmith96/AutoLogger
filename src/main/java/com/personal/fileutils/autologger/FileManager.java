@@ -48,7 +48,16 @@ public class FileManager
         Path path = Paths.get(file.getPath());
         Charset charset = StandardCharsets.UTF_8;
         String content = getFileContent(file, path, charset);
-        content = replaceStatements(content);
+
+        if (content.contains("printStackTrace()"))
+        {
+            content = replaceStatements(content);
+            writeChengesToFile(file, path, charset, content);
+        }
+    }
+
+    private void writeChengesToFile(File file, Path path, Charset charset, String content)
+    {
         try
         {
             Files.write(path, content.getBytes(charset));
